@@ -12,8 +12,8 @@
     <label for="sender">Sender:</label>
     <input type="text" id="sender" name="sender" value="500040751886" required><br><br>
 
-    <label for="phoneNumber">Phone Number:</label>
-    <input type="tel" id="phoneNumber" name="phoneNumber" required><br><br>
+    <label for="phoneNumber">Phone Numbers (comma-separated):</label>
+    <input type="text" id="phoneNumbers" name="phoneNumbers" placeholder="E.g., 1234567890,9876543210" required><br><br>
 
     <label for="message">Message:</label><br>
     <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
@@ -21,25 +21,27 @@
     <input type="submit" value="Send SMS">
   </form>
 
+  <div id="results"></div>
+
   <script>
     document.getElementById("smsForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       const apiKey = document.getElementById("apiKey").value;
       const sender = document.getElementById("sender").value;
-      const phoneNumber = document.getElementById("phoneNumber").value;
+      const phoneNumbers = document.getElementById("phoneNumbers").value.split(',').map(number => number.trim());
       const message = document.getElementById("message").value;
 
       const data = {
         "ApiKey": apiKey,
         "Text": message,
         "Sender": sender,
-        "Recipients": [
-          {
-            "Destination": phoneNumber,
+        "Recipients": phoneNumbers.map(number => {
+          return {
+            "Destination": number,
             "UserTraceId": 0
-          }
-        ]
+          };
+        })
       };
 
       fetch('/send-sms', {
@@ -51,14 +53,25 @@
       })
       .then(response => response.json())
       .then(data => {
-        console.log('SMS sent:', data);
-        // Handle the response as needed
+        console.log('SMS Result:', data);
+        displayResults(data.sendResults);
       })
       .catch(error => {
         console.error('Error:', error);
         // Handle errors, such as displaying an error message to the user
       });
     });
+
+    function displayResults(results) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = ''; // Clear previous results
+
+      results.forEach(result => {
+        const resultParagraph = document.createElement('p');
+        resultParagraph.textContent = `Number: ${result.Destination} - Status: ${result.Status}`;
+        resultsDiv.appendChild(resultParagraph);
+      });
+    }
   </script>
 </body>
 </html>
