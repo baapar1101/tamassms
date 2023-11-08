@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SMS Sender</title>
+</head>
+<body>
+  <h1>Send SMS</h1>
+  <form id="smsForm">
+    <label for="apiKey">API Key:</label>
+    <input type="text" id="apiKey" name="apiKey" value="Baapar7001@" required><br><br>
+
+    <label for="sender">Sender:</label>
+    <input type="text" id="sender" name="sender" value="500040751886" required><br><br>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber" required><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Send SMS">
+  </form>
+
+  <script>
+    document.getElementById("smsForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const apiKey = document.getElementById("apiKey").value;
+      const sender = document.getElementById("sender").value;
+      const phoneNumber = document.getElementById("phoneNumber").value;
+      const message = document.getElementById("message").value;
+
+      const data = {
+        "ApiKey": apiKey,
+        "Text": message,
+        "Sender": sender,
+        "Recipients": [
+          {
+            "Destination": phoneNumber,
+            "UserTraceId": 0
+          }
+        ]
+      };
+
+      fetch('/send-sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('SMS sent:', data);
+        // Handle the response as needed
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, such as displaying an error message to the user
+      });
+    });
+  </script>
+</body>
+</html>
