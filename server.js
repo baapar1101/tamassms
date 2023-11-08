@@ -15,11 +15,26 @@ const server = http.createServer((req, res) => {
 
     req.on('end', () => {
       try {
-        const data = JSON.parse(body);
-        // Simulate sending SMS
-        console.log('SMS Data:', data);
+        const requestData = JSON.parse(body);
+
+        // Simulate sending SMS for each recipient
+        const sendResults = [];
+        requestData.Recipients.forEach(recipient => {
+          const result = {
+            Destination: recipient.Destination,
+            Status: 'Sent' // Simulate success
+            // You can set different statuses based on the actual response from the SMS service
+          };
+          sendResults.push(result);
+        });
+
+        const response = {
+          message: 'SMS sent successfully',
+          sendResults: sendResults
+        };
+
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'SMS sent successfully' }));
+        res.end(JSON.stringify(response));
       } catch (error) {
         res.writeHead(400, { 'Content-Type': 'text/plain' });
         res.end('Error in JSON data');
