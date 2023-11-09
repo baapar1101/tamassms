@@ -2,40 +2,24 @@
 <html>
 <head>
   <title>API Request Example</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <h1>API Request Example</h1>
-  <button onclick="sendAPIRequest()">Send API Request</button>
   
-  <script>
-    function sendAPIRequest() {
-      var request = {
-        ApiKey: '254365-Baapar7001@',
-        Text: 'your_message',
-        Sender: 500040751886,
-        Recipients: [
-          {
-            Destination: 0,
-            UserTraceId: 0
-          }
-        ]
-      };
-
-      $.ajax({
-        url: 'https://api.sms-webservice.com/api/V3/SendBulk',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(request),
-        success: function(response) {
-          console.log(response);
-        },
-        error: function(error) {
-          console.error(error);
-        }
-      });
-    }
-  </script>
+  <label for="apiKeyInput">API Key:</label>
+  <input type="text" id="apiKeyInput" placeholder="Enter your API key">
+  
+  <label for="messageInput">Message Text:</label>
+  <input type="text" id="messageInput" placeholder="Enter your message text">
+  
+  <label for="senderInput">Sender:</label>
+  <input type="number" id="senderInput" placeholder="Enter the sender number">
+  
+  <label for="recipientsInput">Recipients:</label>
+  <input type="text" id="recipientsInput" placeholder="Enter the recipients separated by commas">
+  
+  <button id="sendButton">Send API Request</button>
+  
+  <script src="script.js"></script>
 </body>
 </html>
