@@ -6,20 +6,35 @@ document.getElementById('sendButton').addEventListener('click', function() {
   
     // Create an object to hold the request data
     var requestData = {
-      ApiKey: apiKey,
-      Text: messageText,
-      Sender: sender,
-      Recipients: recipients
+      apiKey: apiKey,
+      messageText: messageText,
+      sender: sender,
+      recipients: recipients
     };
   
-    // Send the API request using the requestData object
-    sendApiRequest(requestData);
+    // Convert the request data to JSON
+    var jsonData = JSON.stringify(requestData);
+  
+    // Send the API request
+    sendApiRequest(jsonData);
   });
   
-  function sendApiRequest(requestData) {
-    // Perform the API request using the provided data
-    // Replace this with your actual code to send the API request
-  
-    // For testing purposes, log the requestData to the console
-    console.log(requestData);
+  function sendApiRequest(jsonData) {
+    // Perform the POST request to your API endpoint
+    fetch('your_api_endpoint', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonData
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Update the result element with the received data
+      document.getElementById('result').textContent = 'Result: ' + JSON.stringify(data);
+    })
+    .catch(error => {
+      // Handle any errors that occur during the request
+      console.error('Error:', error);
+    });
   }

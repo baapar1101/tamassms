@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>API Request Example</title>
+  <title>API Result</title>
+  <script src="script.js"></script>
 </head>
 <body>
-  <h1>API Request Example</h1>
-  
+  <h1>API Result:</h1>
+  <div id="result"></div>
+
   <label for="apiKeyInput">API Key:</label>
-  <input type="text" id="apiKeyInput" placeholder="Enter your API key">
-  
-  <label for="messageInput">Message Text:</label>
-  <input type="text" id="messageInput" placeholder="Enter your message text">
-  
+  <input type="text" id="apiKeyInput" placeholder="Enter API Key"><br>
+
+  <label for="messageInput">Message:</label>
+  <input type="text" id="messageInput" placeholder="Enter Message"><br>
+
   <label for="senderInput">Sender:</label>
-  <input type="number" id="senderInput" placeholder="Enter the sender number">
-  
-  <label for="recipientsInput">Recipients:</label>
-  <input type="text" id="recipientsInput" placeholder="Enter the recipients separated by commas">
-  
+  <input type="text" id="senderInput" placeholder="Enter Sender"><br>
+
+  <label for="recipientsInput">Recipients (comma-separated):</label>
+  <input type="text" id="recipientsInput" placeholder="Enter Recipients"><br>
+
   <button id="sendButton">Send API Request</button>
   
   <script src="script.js"></script>
