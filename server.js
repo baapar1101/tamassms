@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   let pathname = `.${parsedUrl.pathname}`;
 
-  if (req.method === 'POST' && req.url === '/send-sms') {
+  if (req.method === 'GET' && req.url === '/send-sms') {
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString();
